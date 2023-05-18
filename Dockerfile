@@ -26,4 +26,5 @@ RUN addgroup -g 101 -S telegram-bot-api \
  && chown telegram-bot-api:telegram-bot-api ${TELEGRAM_WORK_DIR} ${TELEGRAM_TEMP_DIR}
 
 EXPOSE 8081/tcp 8082/tcp
+RUN apk add python3
 ENTRYPOINT ["/docker-entrypoint.sh"]
