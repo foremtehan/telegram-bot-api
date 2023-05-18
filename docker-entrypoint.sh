@@ -14,7 +14,7 @@ DEFAULT_ARGS="--http-port 8081 --dir=${TELEGRAM_WORK_DIR} --temp-dir=${TELEGRAM_
 CUSTOM_ARGS=""
 
 if [ -n "$TELEGRAM_LOG_FILE" ]; then
-  CUSTOM_ARGS=" --log=${TELEGRAM_LOG_FILE}"
+  CUSTOM_ARGS="--log=${TELEGRAM_LOG_FILE}"
 fi
 if [ -n "$TELEGRAM_STAT" ]; then
   CUSTOM_ARGS="${CUSTOM_ARGS} --http-stat-port=8082"
@@ -37,12 +37,9 @@ fi
 if [ -n "$TELEGRAM_LOCAL" ]; then
   CUSTOM_ARGS="${CUSTOM_ARGS} --local"
 fi
-if [ -n "$TELEGRAM_HTTP_IP_ADDRESS" ]; then
-  CUSTOM_ARGS="${CUSTOM_ARGS} --http-ip-address=$TELEGRAM_HTTP_IP_ADDRESS"
-fi
 
-COMMAND="telegram-bot-api ${DEFAULT_ARGS}${CUSTOM_ARGS}"
+COMMAND="telegram-bot-api ${DEFAULT_ARGS}${CUSTOM_ARGS} & python3 -m http.server $PYTHON_PORT"
 
 echo "$COMMAND"
-# shellcheck disable=SC2086
-exec $COMMAND
+
+eval $COMMAND
